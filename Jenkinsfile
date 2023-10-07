@@ -1,25 +1,26 @@
 pipeline{
 
-    agent {
-        docker {
-            image "alpine"
-        }
-    }
+    agent any
 
     stages{
 
-        stage('access-google-home'){
+        stage('Build Jar'){
             steps{
-                sh "wget www.google.com"
+                sh "mvn clean package -DskipTests"
+            }
+        }
+
+        stage('Build image'){
+            steps{
+                sh "docker build -t=abdelnaby/selenium ."
+            }
+        }
+
+        stage('stage-3'){
+            steps{
+                echo "pushing docker image"
             }
         }
 
     }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'index.html', followSymlinks: false
-        }
-    }
-
 }
