@@ -18,7 +18,7 @@ pipeline{
 
         stage('stage-3'){
             steps{
-                echo "pushing docker image"
+                sh "docker push abdelnaby/selenium"
             }
         }
 
